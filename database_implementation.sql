@@ -1,0 +1,49 @@
+create database CompanyDatabase
+use CompanyDatabase
+CREATE TABLE Department (
+    DNUM INT PRIMARY KEY,
+    DName VARCHAR(100),
+    Location VARCHAR(100)
+);
+
+CREATE TABLE Employee (
+    SSN INT PRIMARY KEY,
+    Fname VARCHAR(50),
+    Lname VARCHAR(50),
+    BirthDate DATE,
+    Gender CHAR(1),
+    DNUM INT,
+    FOREIGN KEY (DNUM) REFERENCES Department(DNUM)
+);
+
+CREATE TABLE DeptLocation (
+	DNUM INT,
+	Locations VARCHAR(100),
+	PRIMARY KEY (DNUM, Locations),
+	FOREIGN KEY (DNUM) REFERENCES Department(DNUM)
+);
+
+CREATE TABLE Project(
+	PNUM INT PRIMARY KEY,
+	PName VARCHAR(100),
+	PRJlocation VARCHAR(100),
+	City VARCHAR(100),
+	DNUM INT,
+	FOREIGN KEY(DNUM) REFERENCES Department(DNUM)
+);
+
+CREATE TABLE WorksON(
+	SSN INT,
+	PNUM INT,
+	PRIMARY KEY (SSN, PNUM),
+	FOREIGN KEY (SSN) REFERENCES Employee(SSN),
+	FOREIGN KEY (PNUM) REFERENCES Project(PNUM),
+);
+
+CREATE TABLE Dependents(
+	dnum INT PRIMARY KEY IDENTITY(1,1),
+	BirthDate DATE,
+	Gender CHAR(1),
+	SSN INT,
+	FOREIGN KEY (SSN) REFERENCES Employee(SSN),
+);
